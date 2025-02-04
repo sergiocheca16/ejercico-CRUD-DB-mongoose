@@ -1,16 +1,12 @@
-require('dotenv').config();
 const express = require('express');
-const { dbConnection } = require('./config/config');
-const tasksRoutes = require('./routes/tasks');
-
-
 const app = express();
-dbConnection();
-const PORT = 3000;
+const PORT = 8080;
+const { dbConnection } = require('./config/config');
+const routes = require('./routes');
 
 app.use(express.json());
-app.use('/tasks', tasksRoutes);
+app.use('/', routes);
 
-app.listen (PORT, () => {
-    console.log(`Express esta escuchandon en puerto http://localhost:${PORT}`)
-});
+dbConnection();
+
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
